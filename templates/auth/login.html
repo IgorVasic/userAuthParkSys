@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filname='css/style.css')}}" type="text/css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+  <title>Document</title>
 </head>
+
 <body>
-    <form action="action_page.php" method="post">
+  <div class="container h-100">
+    <!-- Ovo je glavni spremnik visine 100% radi vertikalnog centriranja -->
+    <div class="row h-100">
+      <!-- Oznaka za novi redak visine 100% radi vertikalnog centriranja -->
+      <div class="col-lg-4 col-md-6 col-sm-12 mx-auto my-auto shadow-sm p-3 bg-white">
+        <!-- Oznake za stupac 4 jedinice za puni ekran 6 za tablet i 12 za male ekrane -->
+        <!-- p-3 znaci padding od 3 jedinice u mootstrapu ovo ide od 0-5 ako melis margine možes koristiti m-->
+        <!-- shadow-sm mala sjena može biti i md i lg -->
+        <!-- bg-white je valjda jasno -->
+        <form action="" method="post">
+          <h3>Prijava na sustav</h3>
+          <div class="form-group">
+            <label for="uname">Korisničko ime</label>
+            <input class="form-control" type="text" placeholder="Unesite Vaše korisničko ime" name="uname" required>
+          </div>
 
-  <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+          <div class="form-group">
+            <label for="psw">Lozinka</label>
+            <input class="form-control" type="password" placeholder="Unesite Vašu lozinku" name="psw" required>
+          </div>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" name="remember">
+            <label class="form-check-label">Zapamti me</label>
+          </div>
 
-    <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Prijavite se</button>
+            <button type="reset" class="btn btn-success" class="">Poništi</button>
+          </div>
+          <span class="psw"><a href="#">Zaboravili ste lozinku?</a></span>
+        </form>
+      </div>
+    </div>
   </div>
-
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
-</form>
 </body>
+
 </html>
