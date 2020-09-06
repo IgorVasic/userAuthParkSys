@@ -4,12 +4,13 @@ from firebase_admin import auth
 from flask import Flask
 from flask import render_template
 
-cred = credentials.Certificate("credentials/autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9 (1).json")
-firebase_admin.initialize_app(cred)
+# cred = credentials.Certificate("credentials/autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9 (1).json")
+# firebase_admin.initialize_app(cred)
 
-#kreira novog usera 
-#auth.create_user(email="igor25vasic@gmail.com", password="Pa$$word")
+# kreira novog usera
+# auth.create_user(email="igor25vasic@gmail.com", password="Pa$$word")
 
+<<<<<<< HEAD
 app = Flask(__name__) 
 @app.route("/login")#poziva funkciju login 
 def login():
@@ -28,5 +29,15 @@ if __name__== "__main__":
     app.run(debug=True)
 
 
+=======
+app = Flask(__name__)
 
 
+@app.route("/login")  # poziva funkciju login
+def login():
+    return render_template("auth/login.html")
+>>>>>>> c393251b5026fc51855baf12290202000bd851c2
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
