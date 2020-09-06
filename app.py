@@ -10,10 +10,19 @@ firebase_admin.initialize_app(cred)
 #kreira novog usera 
 #auth.create_user(email="igor25vasic@gmail.com", password="Pa$$word")
 
-app = Flask(__name__, static_url_path="C:\\UserParkSysAuth\\userAuthParkSys") 
+app = Flask(__name__) 
 @app.route("/login")#poziva funkciju login 
 def login():
     return render_template("auth/login.html")
+    
+if __name__== "__main__":
+    app.run(debug=True)
+
+
+app = Flask(__name__)
+@app.route("/register")#poziva funkciju register 
+def register():
+    return render_template("auth/register.html")
     
 if __name__== "__main__":
     app.run(debug=True)
