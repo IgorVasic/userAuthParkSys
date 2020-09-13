@@ -5,6 +5,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 import re
+import json
 
 cred = credentials.Certificate("credentials/autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9 (1).json")
 firebase_admin.initialize_app(cred)
@@ -13,26 +14,18 @@ firebase_admin.initialize_app(cred)
 # auth.create_user(email="igor25vasic@gmail.com", password="Pa$$word")
 
 app = Flask(__name__) 
-@app.route("/login")#poziva funkciju login 
-def login():
-    return render_template("auth/login.html")
-
-
-
-@app.route("/register")#poziva funkciju register 
-def register():
-    return render_template("auth/register.html")
 
 @app.route("/api/signin", methods=["POST"])#poziva funkciju sign in
 def signin():
     regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
     #dohvatamo sve varijable 
-    ime = request.form.get('name')
-    prezime = request.form.get('srname')
-    email = request.form.get('email')
-    password = request.form.get('psw')
-    cnfPassword = request.form.get('cnfpsw')
-    regPlt = request.form.get('reg')
+    request.data = json.loads(request.data)
+    ime = request.data["name"]
+    prezime = request.data["srname"]
+    email = request.data["email"]
+    password = request.data["psw"]
+    cnfPassword = request.data["cnfpsw"]
+    regPlt = request.data["reg"]
     #provjerava da li su unesena sva polja 
     if (ime == "" 
     or prezime == "" 

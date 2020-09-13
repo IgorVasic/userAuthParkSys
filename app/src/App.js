@@ -6,10 +6,11 @@ import Singup from './Singup';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import {NavLink} from 'react-router-dom';
+
+
 
     
  class App extends React.Component{
@@ -17,13 +18,6 @@ import {NavLink} from 'react-router-dom';
      return (
       <Router>
         <div>
-          <nav className="nav nav-pills">
-            
-                <NavLink activeClassName="active" className="nav-link" to="/login">Login</NavLink>
-
-                <NavLink activeClassName="active" className="nav-link" to="/signup">Signup</NavLink>
-              
-          </nav>
 
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
