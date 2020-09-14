@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
+import AlertTitle  from '@material-ui/lab/AlertTitle';
+import  Alert  from '@material-ui/lab/Alert';
 
 
 
@@ -35,14 +37,17 @@ const useStyles = theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    padding: theme.spacing(2)
+    
   },
+  
 });//sav css
 
 
 class Singup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', srname: '', reg: '', psw: '', cnfpsw: '', message: '', code: "" };
+   this.state = {message: '', code: "" };
     //code varijabla za status 200 300 400 500
     //message varijabla 
     //varijabla state salje vrijednosti korisnika putem post metode
@@ -50,10 +55,20 @@ class Singup extends React.Component {
   }
   handleSubmit = (event) => {
     let self = this;
+    const payload = {
+        ime: self.refs.name.getValue(),
+        prezime: self.refs.srname.getValue(),
+        email: self.refs.email.getValue(),
+        password: self.refs.psw.getValue(),
+        cnfPassword: self.refs.cnfpsw.getValue(),
+        regPlt: self.refs.reg.getValue()
+
+        
+    };
     fetch('http://localhost:5000/api/signin', {
       method: 'POST',
       // We convert the React state to JSON and send it as the POST body
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(payload)//zamjenjeno 
     }).then(function (response) {//response odgovor sa servera najbitniji
       var json = response.json();
       self.setState({ "code": response.status });
@@ -80,7 +95,7 @@ class Singup extends React.Component {
         <Typography variant="body2" color="textSecondary" align="center">
           {'Copyright © '}
           <Link color="inherit" href="https://material-ui.com/">
-            Your Website
+            SUM FPMOZ
                 </Link>{' '}
           {new Date().getFullYear()}
           {'.'}
@@ -92,10 +107,17 @@ class Singup extends React.Component {
       //onchange uzima ono sto stavimo u input i spasava u state varijablu 
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+       
+    
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
+          {this.state.message != "" && <Alert severity={this.state.code == 200 ? "success" : "error"}>
+            <AlertTitle>{this.state.code == 200 ? "Uspješno obrađen zahtjev" : "Nastala je neka greška"}</AlertTitle>
+            {this.state.message}
+            </Alert>
+        }
           <Typography align="center" component="h1" variant="h5" >
             Registracija
           </Typography>
@@ -104,7 +126,7 @@ class Singup extends React.Component {
               <Grid item xs={12} sm={6}>
                 <TextField
 
-                  onChange={this.handleChange}
+                  ref = 'name'
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -119,47 +141,42 @@ class Singup extends React.Component {
               <Grid item xs={12} sm={6}>
                 <TextField
 
-                  onChange={this.handleChange}
                   variant="outlined"
+                  ref = 'srname'
                   required
                   fullWidth
                   id="lastName"
                   label="Prezime"
-                  value={this.props.srname}
                   autoComplete="lname"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-
-                  onChange={this.handleChange}
+                  ref = 'email'
                   variant="outlined"
                   required
                   fullWidth
                   id="email"
                   label="Email Adresa"
-                  value={this.props.email}
                   autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange={this.handleChange}
+                  ref = 'reg'
                   variant="outlined"
                   required
                   fullWidth
-                  name="reg"
                   label="Registracijska oznaka"
                   autoComplete="registracijska-oznaka"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange={this.handleChange}
+                  ref = 'psw'
                   variant="outlined"
                   required
                   fullWidth
-                  value={this.props.psw}
                   label="Lozinka"
                   type="password"
                   id="password"
@@ -168,21 +185,22 @@ class Singup extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  ref = 'cnfpass'
                   variant="outlined"
                   required
                   fullWidth
-                  value={this.props.cnfpsw}
                   label="Potvrda lozinke"
                   type="password"
                 />
               </Grid>
             </Grid>
-            <Button mt={5}
+            <Button 
 
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
+              className={classes.submit}
             >
               Registriraj se
             </Button>
@@ -190,14 +208,14 @@ class Singup extends React.Component {
 
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Već imate račun? Prijavite se.
                 </Link>
               </Grid>
             </Grid>
           </form>
         </div>
-        <Box mt={5}>
+        <Box mt={1}>
           <Copyright />
         </Box>
       </Container>
@@ -206,4 +224,4 @@ class Singup extends React.Component {
   };
 }
 
-export default withStyles(useStyles, { withTheme: true })(Singup);
+export default withStyles(useStyles, { withTheme: true })(Singup);//razlog zasto sve dobro radi 
