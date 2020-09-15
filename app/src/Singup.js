@@ -73,6 +73,7 @@ class Singup extends React.Component {
       return json;
 
     });
+    event.target.reset();
     event.preventDefault();
   }
 
