@@ -113,8 +113,6 @@ class Singup extends React.Component {
               <Grid item xs={12} sm={6}>
                 <TextField
                   name="name"
-                  autoComplete="fname"
-                  name="firstName"
                   variant="outlined"
                   required={true}
                   fullWidth

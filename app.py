@@ -48,7 +48,7 @@ def signin():
                              display_name=ime + " " + prezime)
             return {"message": "Uspjesno ste se prijavili na sustav"}
         except:
-            return {"message": "Nastala je greška prilikom stvaranja računa, možda ste već registrirani s ovom email adresom"}
+            return {"message": "Nastala je greška prilikom stvaranja računa, možda ste već registrirani s ovom email adresom"}, 400
 
 
 if __name__ == "__main__":
