@@ -41,27 +41,25 @@ const useStyles = theme => ({
 class Singup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { message: "", code: "" };
+    this.state = { name: "", srname: "", email: "", psw: "", reg: "", cnfpass: "", message: "", code: "" };
     //code varijabla za status 200 300 400 500
     //message varijabla 
     //varijabla state salje vrijednosti korisnika putem post metode
-    this.name = React.createRef();
-    this.srname = React.createRef();
-    this.email = React.createRef();
-    this.psw = React.createRef();
-    this.cnfpass = React.createRef();
-    this.reg = React.createRef();
   }
+
+  handleChange = (event) => this.setState({ [event.target.name]: event.target.value });
+
   handleSubmit = (event) => {
     let self = this;
     const payload = {
-      ime: self.name.current.value,
-      prezime: self.srname.current.value,
-      email: self.email.current.value,
-      password: self.psw.current.value,
-      cnfPassword: self.cnfpass.current.value,
-      regPlt: self.reg.current.value
-    };
+      name: this.state.name,
+      srname: this.state.srname,
+      email: this.state.email,
+      reg: this.state.reg,
+      psw: this.state.psw,
+      cnfpsw: this.state.cnfpsw
+    }
+
     fetch('http://localhost:5000/api/signin', {
       method: 'POST',
       // We convert the React state to JSON and send it as the POST body
@@ -77,11 +75,6 @@ class Singup extends React.Component {
     });
     event.preventDefault();
   }
-
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
 
   render() {
     const { classes } = this.props;
@@ -119,7 +112,7 @@ class Singup extends React.Component {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  ref={this.name}
+                  name="name"
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -127,61 +120,71 @@ class Singup extends React.Component {
                   fullWidth
                   id="firstName"
                   label="Ime"
-                  value={this.props.name}
+                  value={this.state.name}
+                  onChange={this.handleChange}
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  name="srname"
                   variant="outlined"
-                  ref={this.srname}
                   required={true}
                   fullWidth
                   id="lastName"
                   label="Prezime"
                   autoComplete="lname"
+                  onChange={this.handleChange}
+                  value={this.state.srname}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref={this.email}
                   variant="outlined"
                   required={true}
                   fullWidth
-                  id="email"
+                  name="email"
                   label="Email Adresa"
                   autoComplete="email"
+                  onChange={this.handleChange}
+                  value={this.state.email}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref={this.reg}
                   variant="outlined"
                   required={true}
                   fullWidth
+                  name="reg"
                   label="Registracijska oznaka"
                   autoComplete="registracijska-oznaka"
+                  onChange={this.handleChange}
+                  value={this.state.reg}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref={this.psw}
                   variant="outlined"
                   required={true}
                   fullWidth
                   label="Lozinka"
                   type="password"
                   id="password"
+                  name="psw"
                   autoComplete="current-password"
+                  onChange={this.handleChange}
+                  value={this.state.psw}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref={this.cnfpass}
+                  onChange={this.handleChange}
+                  value={this.state.cnfpsw}
                   variant="outlined"
                   required={true}
                   fullWidth
                   label="Potvrda lozinke"
+                  name="cnfpsw"
                   type="password"
                 />
               </Grid>
