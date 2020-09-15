@@ -1,24 +1,18 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+import RaisedButton from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import PropTypes from 'prop-types';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
-import AlertTitle  from '@material-ui/lab/AlertTitle';
-import  Alert  from '@material-ui/lab/Alert';
-
-
-
+import AlertTitle from '@material-ui/lab/AlertTitle';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = theme => ({
   paper: {
@@ -38,32 +32,35 @@ const useStyles = theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     padding: theme.spacing(2)
-    
+
   },
-  
+
 });//sav css
 
 
 class Singup extends React.Component {
   constructor(props) {
     super(props);
-   this.state = {message: '', code: "" };
+    this.state = { message: "", code: "" };
     //code varijabla za status 200 300 400 500
     //message varijabla 
     //varijabla state salje vrijednosti korisnika putem post metode
-
+    this.name = React.createRef();
+    this.srname = React.createRef();
+    this.email = React.createRef();
+    this.psw = React.createRef();
+    this.cnfpass = React.createRef();
+    this.reg = React.createRef();
   }
   handleSubmit = (event) => {
     let self = this;
     const payload = {
-        ime: self.refs.name.getValue(),
-        prezime: self.refs.srname.getValue(),
-        email: self.refs.email.getValue(),
-        password: self.refs.psw.getValue(),
-        cnfPassword: self.refs.cnfpsw.getValue(),
-        regPlt: self.refs.reg.getValue()
-
-        
+      ime: self.name.current.value,
+      prezime: self.srname.current.value,
+      email: self.email.current.value,
+      password: self.psw.current.value,
+      cnfPassword: self.cnfpass.current.value,
+      regPlt: self.reg.current.value
     };
     fetch('http://localhost:5000/api/signin', {
       method: 'POST',
@@ -78,7 +75,6 @@ class Singup extends React.Component {
       return json;
 
     });
-    event.target.reset();
     event.preventDefault();
   }
 
@@ -107,30 +103,27 @@ class Singup extends React.Component {
       //onchange uzima ono sto stavimo u input i spasava u state varijablu 
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-       
-    
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          {this.state.message != "" && <Alert severity={this.state.code == 200 ? "success" : "error"}>
-            <AlertTitle>{this.state.code == 200 ? "Uspješno obrađen zahtjev" : "Nastala je neka greška"}</AlertTitle>
+          {this.state.message !== "" && <Alert severity={this.state.code === 200 ? "success" : "error"}>
+            <AlertTitle>{this.state.code === 200 ? "Uspješno obrađen zahtjev" : "Nastala je neka greška"}</AlertTitle>
             {this.state.message}
-            </Alert>
-        }
+          </Alert>
+          }
           <Typography align="center" component="h1" variant="h5" >
             Registracija
           </Typography>
-          <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+          <form className={classes.form} onSubmit={this.handleSubmit} action="/" method="POST">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-
-                  ref = 'name'
+                  ref={this.name}
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   id="firstName"
                   label="Ime"
@@ -140,10 +133,9 @@ class Singup extends React.Component {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-
                   variant="outlined"
-                  ref = 'srname'
-                  required
+                  ref={this.srname}
+                  required={true}
                   fullWidth
                   id="lastName"
                   label="Prezime"
@@ -152,9 +144,9 @@ class Singup extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref = 'email'
+                  ref={this.email}
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   id="email"
                   label="Email Adresa"
@@ -163,9 +155,9 @@ class Singup extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref = 'reg'
+                  ref={this.reg}
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   label="Registracijska oznaka"
                   autoComplete="registracijska-oznaka"
@@ -173,9 +165,9 @@ class Singup extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref = 'psw'
+                  ref={this.psw}
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   label="Lozinka"
                   type="password"
@@ -185,17 +177,16 @@ class Singup extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  ref = 'cnfpass'
+                  ref={this.cnfpass}
                   variant="outlined"
-                  required
+                  required={true}
                   fullWidth
                   label="Potvrda lozinke"
                   type="password"
                 />
               </Grid>
             </Grid>
-            <Button 
-
+            <RaisedButton
               type="submit"
               fullWidth
               variant="contained"
@@ -203,9 +194,7 @@ class Singup extends React.Component {
               className={classes.submit}
             >
               Registriraj se
-            </Button>
-
-
+            </RaisedButton>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">
