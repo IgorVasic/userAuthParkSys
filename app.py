@@ -7,8 +7,7 @@ from flask import request
 import re
 import json
 
-cred = credentials.Certificate(
-    "credentials/autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9.json")
+cred = credentials.Certificate("credentials\\autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9 (1).json")
 firebase_admin.initialize_app(cred)
 
 # kreira novog usera
@@ -33,8 +32,8 @@ def signin():
         or prezime == ""
         or email == ""
         or password == ""
-            or cnfPassword == ""
-            or regPlt == ""
+        or cnfPassword == ""
+        or regPlt == ""
         ):
         return {"message": "Niste popunili sva polja"}, 400
     elif not re.search(regex, email):
@@ -42,7 +41,7 @@ def signin():
     elif (password != cnfPassword):
         return {"message": "Unesene lozinke se ne poklapaju"}, 400
     else:
-        # dodaje ovog usera
+        # dodaje novog usera
         try:
             auth.create_user(email=email, password=password,
                              display_name=ime + " " + prezime)

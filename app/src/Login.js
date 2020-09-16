@@ -39,6 +39,24 @@ const useStyles = theme => ({
 });
 
 class Login extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state = { email: "", psw: , message: "", code: "" };
+    //code varijabla za status 200 300 400 500
+    //message varijabla 
+    //varijabla state salje vrijednosti korisnika putem post metode
+  }
+  handleChange = (event) => this.setState({ [event.target.name]: event.target.value });
+
+  handleSubmit = (event) => {
+    let self = this;
+    const payload = {
+     
+      email: this.state.email,
+      psw: this.state.psw
+     
+    }
     render(){
       const { classes } = this.props;
       function Copyright() {
@@ -63,6 +81,10 @@ class Login extends React.Component{
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
+            {this.state.message !== "" && <Alert severity={this.state.code === 200 ? "success" : "error"}>
+            <AlertTitle>{this.state.code === 200 ? "Uspješno obrađen zahtjev" : "Nastala je neka greška"}</AlertTitle>
+            {this.state.message}
+          </Alert>
             <Typography component="h1" variant="h5">
               Prijava
             </Typography>
@@ -77,6 +99,8 @@ class Login extends React.Component{
                 ref="email"
                 autoComplete="email"
                 autoFocus
+                onChange={this.handleChange}
+                  value={this.state.email}
               />
               <TextField
                 variant="outlined"
@@ -88,6 +112,8 @@ class Login extends React.Component{
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={this.handleChange}
+                  value={this.state.psw}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

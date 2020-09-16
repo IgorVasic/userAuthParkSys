@@ -73,7 +73,8 @@ class Singup extends React.Component {
       return json;
 
     });
-    event.target.reset();
+    //event.target.reset();
+    this.setState({name : "", srname : "", reg : "",email : "",psw : "",cnfpsw:""})//postavlja vrijednosti na prazno
     event.preventDefault();
   }
 
