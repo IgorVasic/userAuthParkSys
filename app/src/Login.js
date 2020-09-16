@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
+import AlertTitle from '@material-ui/lab/AlertTitle';
+import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = theme => ({
@@ -42,7 +44,7 @@ class Login extends React.Component{
 
   constructor(props) {
     super(props);
-    this.state = { email: "", psw: , message: "", code: "" };
+    this.state = { email: "", psw:"" , message: "", code: "" };
     //code varijabla za status 200 300 400 500
     //message varijabla 
     //varijabla state salje vrijednosti korisnika putem post metode
@@ -58,7 +60,7 @@ class Login extends React.Component{
      
     }
   
-  fetch('http://localhost:5000/api/signin', {
+  fetch('http://localhost:5000/api/token', {
       method: 'POST',
       // We convert the React state to JSON and send it as the POST body
       body: JSON.stringify(payload)//zamjenjeno 
@@ -72,7 +74,7 @@ class Login extends React.Component{
 
     });
     //event.target.reset();
-    this.setState({name : "", srname : "", reg : "",email : "",psw : "",cnfpsw:""})//postavlja vrijednosti na prazno
+    this.setState({email : "",psw : ""})//postavlja vrijednosti na prazno
     event.preventDefault();
   }
 
@@ -109,36 +111,36 @@ class Login extends React.Component{
             {this.state.message !== "" && <Alert severity={this.state.code === 200 ? "success" : "error"}>
             <AlertTitle>{this.state.code === 200 ? "Uspješno obrađen zahtjev" : "Nastala je neka greška"}</AlertTitle>
             {this.state.message}
-          </Alert>
+          </Alert>}
             <Typography component="h1" variant="h5">
               Prijava
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={this.handleSubmit}  noValidate>
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 id="email"
+                name="email"
                 label="Email Adresa"
-                ref="email"
                 autoComplete="email"
                 autoFocus
                 onChange={this.handleChange}
-                  value={this.state.email}
+                value={this.state.email}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                ref="psw"
+                name="psw"
                 label="Lozinka"
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 onChange={this.handleChange}
-                  value={this.state.psw}
+                value={this.state.psw}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

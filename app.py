@@ -6,9 +6,11 @@ from flask import render_template
 from flask import request
 import re
 import json
+import pyrebase
 
 cred = credentials.Certificate("credentials\\autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9 (1).json")
 firebase_admin.initialize_app(cred)
+pb = pyrebase.initialize_app(json.load(open('credentials\\firebaseconfig.json')))
 
 # kreira novog usera
 # auth.create_user(email="igor25vasic@gmail.com", password="Pa$$word")
@@ -48,6 +50,19 @@ def signin():
             return {"message": "Uspjesno ste se prijavili na sustav"}
         except:
             return {"message": "Nastala je greška prilikom stvaranja računa, možda ste već registrirani s ovom email adresom"}, 400
+
+
+@app.route('/api/token')#salje email i pass i logira usera 
+def token():
+    request.data = json.loads(request.data)
+    email = request.data['email']
+    password = request.data['password']
+    try:
+        user = pb.auth().sign_in_with_email_and_password(email, password)
+        jwt = user['idToken']
+        return {'token': jwt}, 200
+    except:
+        return {'message': 'Nastao je problem prilikom prijave, možda korisnički podaci nisu ispravni'},400
 
 
 if __name__ == "__main__":
