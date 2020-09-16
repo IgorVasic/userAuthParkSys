@@ -57,6 +57,31 @@ class Login extends React.Component{
       psw: this.state.psw
      
     }
+  
+  fetch('http://localhost:5000/api/signin', {
+      method: 'POST',
+      // We convert the React state to JSON and send it as the POST body
+      body: JSON.stringify(payload)//zamjenjeno 
+    }).then(function (response) {//response odgovor sa servera najbitniji
+      var json = response.json();
+      self.setState({ "code": response.status });
+      json.then(function (data) {
+        self.setState({ "message": data.message });
+      });
+      return json;
+
+    });
+    //event.target.reset();
+    this.setState({name : "", srname : "", reg : "",email : "",psw : "",cnfpsw:""})//postavlja vrijednosti na prazno
+    event.preventDefault();
+  }
+
+
+
+
+
+
+
     render(){
       const { classes } = this.props;
       function Copyright() {
