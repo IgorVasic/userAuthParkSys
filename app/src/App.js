@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import Login from './Login';
 import Singup from './Singup';
@@ -9,11 +9,19 @@ import {
   Route
 } from "react-router-dom";
 import {NavLink} from 'react-router-dom';
+import  Home  from './Home';
+//import   NumberOfPeople from './NumberOfPeople';
+//import  NumberOfCars from './NumberOfCars';
+import Profile from './Profile';
+
+
 
 
 
     
  class App extends React.Component{
+
+ 
    render(){    
      return (
       <Router>
@@ -31,6 +39,13 @@ import {NavLink} from 'react-router-dom';
             <Route path="/Signup">
               <Singup/>
             </Route>
+            <Route path="/Home">
+              <Home/>
+            </Route>
+            <Route path="/Profile">
+              <Profile/>
+            </Route>
+    
           </Switch>
         </div>
       </Router>

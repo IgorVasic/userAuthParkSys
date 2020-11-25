@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 import AlertTitle from '@material-ui/lab/AlertTitle';
@@ -68,6 +68,7 @@ class Login extends React.Component{
       var json = response.json();
       self.setState({ "code": response.status });
       json.then(function (data) {
+        localStorage.setItem('token', data.token);
         self.setState({ "message": data.message });
       });
       return json;

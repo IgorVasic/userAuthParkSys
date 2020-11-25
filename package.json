@@ -1,0 +1,28 @@
+{
+  "name": "userauthparksys",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgorVasic/userAuthParkSys.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgorVasic/userAuthParkSys/issues"
+  },
+  "homepage": "https://github.com/IgorVasic/userAuthParkSys#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "firebase": "^8.0.1",
+    "react-hls": "0.0.8",
+    "react-router-dom": "^5.2.0",
+    "recharts": "^1.8.5"
+  }
+}

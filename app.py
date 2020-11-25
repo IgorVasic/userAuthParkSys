@@ -7,10 +7,16 @@ from flask import request
 import re
 import json
 import pyrebase
+import os
+from functools import wraps
 
-cred = credentials.Certificate("credentials\\autentificationfirebase-2a9f4-firebase-adminsdk-5axd2-196b6c35a9 (1).json")
+print(os.getcwd())
+
+cred = credentials.Certificate("credentials/realtimethesis-firebase-adminsdk-elwjt-e65bbf0293.json")
 firebase_admin.initialize_app(cred)
-pb = pyrebase.initialize_app(json.load(open('credentials\\firebaseconfig.json')))
+pb = pyrebase.initialize_app(json.load(open('credentials/firebaseconfig.json')))
+#db = pb.database()
+#db.child("name").push({"people":"22"})
 
 # kreira novog usera
 # auth.create_user(email="igor25vasic@gmail.com", password="Pa$$word")
@@ -64,6 +70,25 @@ def token():
     except:
         return {'message': 'Nastao je problem prilikom prijave, možda korisnički podaci nisu ispravni'},400
 
+def check_token(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if not request.headers.get('authorization'):
+            return {'message': 'Nije dodijeljen token'},400
+        try:
+            user = auth.verify_id_token(request.headers['authorization'])
+            request.user = user
+        except:
+            return {'message':'Neispravana token.'},400
+        return f(*args, **kwargs)
+    return wrap
+@app.route('/api/home')
+#@check_token
+def home():
+    return 'Home'
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
